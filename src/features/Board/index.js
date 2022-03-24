@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Card from "./Card";
 import * as Actions from "../../Store/Actions";
@@ -21,54 +21,67 @@ const GameWrapper = styled.div`
     text-align: center;
 `;
 const TokenPoolWrapper = styled.div`
-    display:flex;
+    display: flex;
     flex-flow: column wrap;
     align-items: center;
-`
+`;
 
 function Board() {
-    const { deck, tokenPool, turns, players, host, currentCardIndex, currentPlayerIndex } =
-        useSelector(({ game }) => game);
+    const {
+        deck,
+        tokenPool,
+        turns,
+        players,
+        host,
+        currentCardIndex,
+        currentPlayerIndex,
+    } = useSelector(({ game }) => game);
+
+    const [cannotPass, setCannotPass] = useState(false);
 
     function startGame() {
-        Actions.startGame(Math.floor(Math.random() * deck.length));
+        const newDeck = Actions.removeCardsFromDeck(
+            [...Array(36).keys()].slice(3)
+        );
+        const shuffledTurns = Actions.shuffle(turns);
+        const startingCardIndex = Math.floor(Math.random() * deck.length);
+        const numPlayers = Object.keys(players).length;
+        const startingToken =
+            numPlayers <= 5 ? 11 : numPlayers <= 6 ? 9 : 7;
+        Actions.startGame(
+            newDeck,
+            shuffledTurns,
+            startingCardIndex,
+            startingToken
+        );
     }
 
     function takeCard() {
-        const currPlayerCards = [...players[turns[currentPlayerIndex]].cards, deck[currentCardIndex]];
+        const currPlayerCards = [
+            ...players[turns[currentPlayerIndex]].cards,
+            deck[currentCardIndex],
+        ];
         currPlayerCards.sort((a, b) => a - b);
-        
+
         Actions.takeCard(
             turns[currentPlayerIndex],
             currentCardIndex,
             currPlayerCards,
-            getNextPlayerIndex(),
+            Actions.getNextPlayerIndex(
+                deck.length - 1,
+                turns.length,
+                currentPlayerIndex
+            ), // One card will be taken
             Math.floor(Math.random() * (deck.length - 1)), // One card will be taken
-            calculateScore(currPlayerCards)
+            Actions.calculateScore(currPlayerCards)
         );
-    }
-    function getNextPlayerIndex() {
-        if (currentPlayerIndex === null) {
-            return currentPlayerIndex;
-        }
-        if (currentPlayerIndex >= turns.length - 1) {
-            return 0;
-        }
-        return currentPlayerIndex + 1;
-    }
-    function calculateScore(cards) {
-        if (!cards) return 0;
-
-        let result = cards[cards.length-1];
-        for (let i = cards.length-2; i >= 0; i--) {
-            if (cards[i + 1] - cards[i] !== 1) {
-                result += cards[i];
-            }
-        }
-        return result;
     }
 
     function passTurn() {
+        if (players[turns[currentPlayerIndex]].token <= 0) {
+            setCannotPass(true);
+            return;
+        }
         Actions.passTurn(turns[currentPlayerIndex]);
     }
 
@@ -82,6 +95,7 @@ function Board() {
             ) : (
                 <>
                     <h2>{players[turns[currentPlayerIndex]].name}'s turn</h2>
+                    {cannotPass && <p style={{color: "red"}}>Cannot pass as you have no tokens</p>}
                     {socket.id === turns[currentPlayerIndex] && (
                         <PlayerAction
                             name={players[turns[currentPlayerIndex]].name}
@@ -98,7 +112,7 @@ function Board() {
                 </div>
                 <TokenPoolWrapper>
                     <b>Token Pool</b>
-                    <Card mini number={tokenPool}/>
+                    <Card mini number={tokenPool} />
                 </TokenPoolWrapper>
                 <div>
                     <b>Current card</b>

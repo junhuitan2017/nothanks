@@ -19,14 +19,11 @@ const TableWrapper = styled.div`
 `;
 
 function PlayerTable() {
-    const players = useSelector(({game}) => game.players);
+    const { turns, players } = useSelector(({ game }) => game);
     return (
         <TableWrapper numTables={players.length}>
-            {Object.values(players).map((player) => (
-                <ScoreTable
-                    key={player.name}
-                    player={player}
-                />
+            {turns.map((id) => (
+                <ScoreTable key={players[id].name} player={players[id]} />
             ))}
         </TableWrapper>
     );

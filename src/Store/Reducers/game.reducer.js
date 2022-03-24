@@ -3,7 +3,7 @@ import { PASS_TURN, PLAYER_LEFT } from "../Actions";
 
 const initialState = {
     host: null,
-    deck: [...Array(36).keys()].slice(1),
+    deck: [],
     tokenPool: 0,
     turns: [],
     players: {},
@@ -29,14 +29,27 @@ const game = (state = initialState, action) => {
                     [action.id]: {
                         name: action.name,
                         score: 0,
-                        token: 10,
+                        token: "-",
                         cards: [],
                     },
                 },
             };
         case Actions.START_GAME:
+            const resetPlayers = {};
+            Object.keys(state.players).forEach(id => {
+                resetPlayers[id] = {
+                    name: state.players[id].name,
+                    score: 0,
+                    token: action.startingToken,
+                    cards: [],
+                }
+            });
             return {
                 ...state,
+                deck: [...action.deck],
+                tokenPool: 0,
+                turns: [...action.turns],
+                players: resetPlayers,
                 currentCardIndex: action.cIndex,
                 currentPlayerIndex: action.pIndex,
             };

@@ -12,15 +12,18 @@ export function sendName(id, name) {
     SocketSender.broadcastToAll({
         type: SETUP_NAME,
         id,
-        name
+        name,
     });
 }
 
-export function startGame(cIndex) {
+export function startGame(deck, turns, cIndex, startingToken) {
     SocketSender.broadcastToAll({
         type: START_GAME,
+        deck,
+        turns,
         pIndex: 0,
-        cIndex: cIndex,
+        cIndex,
+        startingToken
     });
 }
 
@@ -41,4 +44,58 @@ export function passTurn(id) {
         type: PASS_TURN,
         id,
     });
+}
+
+// Helper Functions
+export function removeCardsFromDeck(deck) {
+    let newDeck = [...deck];
+
+    // Remove 9 cards as per official manual
+    for (let i = 0; i < 9; i++) {
+        const splicePos = Math.floor(Math.random() * newDeck.length);
+        newDeck.splice(splicePos, 1);
+    }
+    return newDeck;
+}
+
+export function getNextPlayerIndex(deckLength, turnsLength, pIndex) {
+    if (pIndex === null || deckLength === 0) {
+        return null;
+    }
+    if (pIndex >= turnsLength - 1) {
+        return 0;
+    }
+    return pIndex + 1;
+}
+
+export function calculateScore(cards) {
+    if (!cards) return 0;
+
+    let result = cards[cards.length - 1];
+    for (let i = cards.length - 2; i >= 0; i--) {
+        if (cards[i + 1] - cards[i] !== 1) {
+            result += cards[i];
+        }
+    }
+    return result;
+}
+
+export function shuffle(array) {
+    let currentIndex = array.length;
+    let randomIndex;
+
+    // While there remain elements to shuffle...
+    while (currentIndex !== 0) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex],
+            array[currentIndex],
+        ];
+    }
+
+    return array;
 }
