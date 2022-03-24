@@ -1,25 +1,57 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import styled from "styled-components";
+import PlayerTable from "./features/PlayerTable";
+import Board from "./features/Board";
+import { useState } from "react";
+import * as Actions from "./Store/Actions";
+import socket from "./Socket";
+
+const AppBody = styled.div`
+    height: 90vh;
+    padding: 4px;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-around;
+    text-align: center;
+`;
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [showDialog, setShowDialog] = useState(true);
+    const [name, setName] = useState("");
+    const [error, setError] = useState("");
+
+    function submitName(e) {
+        e.preventDefault();
+        if (!name) {
+            setError("Name cannot be empty");
+            return;
+        }
+        Actions.sendName(socket.id, name);
+        setShowDialog(false);
+    }
+
+    return (
+        <AppBody>
+            {showDialog ? (
+                <form onSubmit={submitName}>
+                    <h1>Enter your name:</h1>
+                    <input
+                        maxLength={10}
+                        placeholder={"Enter your name"}
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <button>Enter Game</button>
+                    <p style={{color: "red"}}>{error}</p>
+                </form>
+            ) : (
+                <>
+                    <PlayerTable />
+                    <Board />
+                </>
+            )}
+        </AppBody>
+    );
 }
 
 export default App;
