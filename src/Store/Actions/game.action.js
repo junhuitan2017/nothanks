@@ -24,14 +24,15 @@ export function startGame(cIndex) {
     });
 }
 
-export function takeCard(id, cIndex, card, nextPIndex, nextCIndex) {
+export function takeCard(id, cIndex, cards, nextPIndex, nextCIndex, score) {
     SocketSender.broadcastToAll({
         type: TAKE_CARD,
         id,
         cIndex,
-        card,
+        cards,
         nextPIndex,
         nextCIndex,
+        score,
     });
 }
 

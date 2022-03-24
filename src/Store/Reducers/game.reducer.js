@@ -3,7 +3,8 @@ import { PASS_TURN, PLAYER_LEFT } from "../Actions";
 
 const initialState = {
     host: null,
-    deck: [...Array(6).keys()].slice(1),
+    deck: [...Array(36).keys()].slice(1),
+    tokenPool: 0,
     turns: [],
     players: {},
     currentCardIndex: null,
@@ -40,19 +41,21 @@ const game = (state = initialState, action) => {
                 currentPlayerIndex: action.pIndex,
             };
         case Actions.TAKE_CARD:
+            const playerTokens = state.players[action.id].token + state.tokenPool;
             return {
                 ...state,
                 deck: [
                     ...state.deck.slice(0, action.cIndex),
                     ...state.deck.slice(action.cIndex + 1),
                 ],
+                tokenPool: 0,
                 players: {
                     ...state.players,
                     [action.id]: {
                         ...state.players[action.id],
-                        score: state.players[action.id].score + 1,
-                        token: state.players[action.id].token,
-                        cards: [...state.players[action.id].cards, action.card],
+                        score: action.score - playerTokens,
+                        token: playerTokens,
+                        cards: [...action.cards],
                     },
                 },
                 currentCardIndex: action.nextCIndex,
@@ -61,12 +64,13 @@ const game = (state = initialState, action) => {
         case PASS_TURN:
             return {
                 ...state,
+                tokenPool: state.tokenPool + 1,
                 turns: [...state.turns.slice(1), state.turns[0]],
                 players: {
                     ...state.players,
                     [action.id]: {
                         ...state.players[action.id],
-                        score: state.players[action.id].score,
+                        score: state.players[action.id].score + 1,
                         token: state.players[action.id].token - 1,
                     },
                 },

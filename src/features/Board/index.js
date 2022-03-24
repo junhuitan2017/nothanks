@@ -17,11 +17,17 @@ const BoardWrapper = styled.div`
 const GameWrapper = styled.div`
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
     text-align: center;
 `;
+const TokenPoolWrapper = styled.div`
+    display:flex;
+    flex-flow: column wrap;
+    align-items: center;
+`
 
 function Board() {
-    const { deck, turns, players, host, currentCardIndex, currentPlayerIndex } =
+    const { deck, tokenPool, turns, players, host, currentCardIndex, currentPlayerIndex } =
         useSelector(({ game }) => game);
 
     function startGame() {
@@ -29,12 +35,16 @@ function Board() {
     }
 
     function takeCard() {
+        const currPlayerCards = [...players[turns[currentPlayerIndex]].cards, deck[currentCardIndex]];
+        currPlayerCards.sort((a, b) => a - b);
+        
         Actions.takeCard(
             turns[currentPlayerIndex],
             currentCardIndex,
-            deck[currentCardIndex],
+            currPlayerCards,
             getNextPlayerIndex(),
-            Math.floor(Math.random() * (deck.length - 1)) // One card will be taken
+            Math.floor(Math.random() * (deck.length - 1)), // One card will be taken
+            calculateScore(currPlayerCards)
         );
     }
     function getNextPlayerIndex() {
@@ -45,6 +55,17 @@ function Board() {
             return 0;
         }
         return currentPlayerIndex + 1;
+    }
+    function calculateScore(cards) {
+        if (!cards) return 0;
+
+        let result = cards[cards.length-1];
+        for (let i = cards.length-2; i >= 0; i--) {
+            if (cards[i + 1] - cards[i] !== 1) {
+                result += cards[i];
+            }
+        }
+        return result;
     }
 
     function passTurn() {
@@ -75,6 +96,10 @@ function Board() {
                     <b>Number of cards left</b>
                     <Card number={deck.length} />
                 </div>
+                <TokenPoolWrapper>
+                    <b>Token Pool</b>
+                    <Card mini number={tokenPool}/>
+                </TokenPoolWrapper>
                 <div>
                     <b>Current card</b>
                     <Card number={deck[currentCardIndex]} />

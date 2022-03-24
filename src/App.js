@@ -7,10 +7,10 @@ import * as Actions from "./Store/Actions";
 import socket from "./Socket";
 
 const AppBody = styled.div`
-    height: 90vh;
+    min-height: 90vh;
     padding: 4px;
     display: flex;
-    flex-flow: column wrap;
+    flex-flow: column nowrap;
     justify-content: space-around;
     text-align: center;
 `;

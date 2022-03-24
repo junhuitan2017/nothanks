@@ -44,7 +44,7 @@ function ScoreTable(props) {
                         <th>T</th>
                     </tr>
                     <tr>
-                        <td>{score}</td>
+                        <td>{Math.max(score, 0)}</td>
                         <td>{token}</td>
                     </tr>
                 </tbody>
