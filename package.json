@@ -1,45 +1,50 @@
 {
-  "name": "nothanks",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.4",
-    "@testing-library/user-event": "^13.5.0",
-    "concurrently": "^7.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-redux": "^7.2.6",
-    "react-scripts": "5.0.0",
-    "redux": "^4.1.2",
-    "redux-thunk": "^2.4.1",
-    "socket.io-client": "^4.4.1",
-    "styled-components": "^5.3.3",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "dev": "concurrently \"cd server && npm run dev\" \"npm run start\""
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+    "name": "nothanks",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@testing-library/jest-dom": "^5.16.2",
+        "@testing-library/react": "^12.1.4",
+        "@testing-library/user-event": "^13.5.0",
+        "concurrently": "^7.0.0",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-redux": "^7.2.6",
+        "react-scripts": "5.0.0",
+        "redux": "^4.1.2",
+        "redux-thunk": "^2.4.1",
+        "socket.io-client": "^4.4.1",
+        "styled-components": "^5.3.3",
+        "express": "^4.17.3",
+        "nodemon": "^2.0.15",
+        "socket.io": "^4.4.1",
+        "web-vitals": "^2.1.4"
+    },
+    "scripts": {
+        "start": "node src/server.js",
+        "rstart": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
+        "server": "nodemon src/server.js",
+        "dev": "concurrently \"npm run src/server.js\" \"npm run rstart\""
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
 }

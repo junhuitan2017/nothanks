@@ -13,11 +13,15 @@ const io = new Server(server, {
     }
 });
 
-const gameport = process.env.PORT || 5000;
+const gameport = process.env.PORT || 8080;
 
-if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "scrabblesnatch", "build")));
-}
+app.use(express.static(path.join(__dirname, "../build")));
+
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "https://mini-projects-345114.as.r.appspot.com");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+})
 
 const GAME_EVENT = "GAME EVENT";
 const SPECIAL_EVENT = "SPECIAL EVENT";
@@ -59,6 +63,9 @@ io.on("connection", socket => {
     });
 })
 
+app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "build", "index.html"));
+})
 server.listen(gameport, () => {
     console.log(`App listening on port ${gameport}`);
 });
