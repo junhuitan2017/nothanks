@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import PlayerAction from "./ActionBlock/PlayerAction";
 import WaitAction from "./ActionBlock/WaitAction";
 import socket from "../../Socket";
+import BoardInfo from "./BoardInfo";
 
 const BoardWrapper = styled.div`
     padding: 4px;
@@ -14,16 +15,19 @@ const BoardWrapper = styled.div`
     flex-flow: column wrap;
     text-align: center;
 `;
+const ActionWrapper = styled.div`
+    min-height: 100px;
+    width: 50%;
+    border-radius: 8px;
+    align-self: center;
+    margin: 8px;
+`;
 const GameWrapper = styled.div`
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     text-align: center;
-`;
-const TokenPoolWrapper = styled.div`
-    display: flex;
-    flex-flow: column wrap;
-    align-items: center;
+    margin: 0 200px;
 `;
 
 function Board() {
@@ -46,8 +50,7 @@ function Board() {
         const shuffledTurns = Actions.shuffle(turns);
         const startingCardIndex = Math.floor(Math.random() * deck.length);
         const numPlayers = Object.keys(players).length;
-        const startingToken =
-            numPlayers <= 5 ? 11 : numPlayers <= 6 ? 9 : 7;
+        const startingToken = numPlayers <= 5 ? 11 : numPlayers <= 6 ? 9 : 7;
         Actions.startGame(
             newDeck,
             shuffledTurns,
@@ -87,33 +90,40 @@ function Board() {
 
     return (
         <BoardWrapper>
-            {currentPlayerIndex === null ? (
-                <WaitAction
-                    isHost={socket.id === host}
-                    onStartGame={startGame}
-                />
-            ) : (
-                <>
-                    <h2>{players[turns[currentPlayerIndex]].name}'s turn</h2>
-                    {cannotPass && <p style={{color: "red"}}>Cannot pass as you have no tokens</p>}
-                    {socket.id === turns[currentPlayerIndex] && (
-                        <PlayerAction
-                            name={players[turns[currentPlayerIndex]].name}
-                            onTakeCard={takeCard}
-                            onPassTurn={passTurn}
-                        />
-                    )}
-                </>
-            )}
+            <ActionWrapper>
+                {currentPlayerIndex === null ? (
+                    <WaitAction
+                        isHost={socket.id === host}
+                        onStartGame={startGame}
+                    />
+                ) : (
+                    <>
+                        <h2>
+                            {players[turns[currentPlayerIndex]].name}'s turn
+                        </h2>
+                        {cannotPass && (
+                            <p style={{ color: "red" }}>
+                                Cannot pass as you have no tokens
+                            </p>
+                        )}
+                        {socket.id === turns[currentPlayerIndex] && (
+                            <PlayerAction
+                                name={players[turns[currentPlayerIndex]].name}
+                                onTakeCard={takeCard}
+                                onPassTurn={passTurn}
+                            />
+                        )}
+                    </>
+                )}
+            </ActionWrapper>
             <GameWrapper>
                 <div>
-                    <b>Number of cards left</b>
-                    <Card number={deck.length} />
+                    <b>Pool</b>
+                    <BoardInfo
+                        numCards={deck.length - 1}
+                        numTokens={tokenPool}
+                    />
                 </div>
-                <TokenPoolWrapper>
-                    <b>Token Pool</b>
-                    <Card mini number={tokenPool} />
-                </TokenPoolWrapper>
                 <div>
                     <b>Current card</b>
                     <Card number={deck[currentCardIndex]} />

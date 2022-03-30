@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { UNICORN_RAINBOW } from "../../constant/colors";
 
 const StyledCard = styled.div`
     height: 200px;
@@ -6,6 +7,7 @@ const StyledCard = styled.div`
     border: 1px solid black;
     border-radius: 8px;
     font-size: 72px;
+    background-color: ${({color}) => color};
 
     div {
         display: flex;
@@ -25,9 +27,11 @@ const StyledCard = styled.div`
 function Card(props) {
     const { number, mini } = props;
 
+    const color = UNICORN_RAINBOW[Math.ceil(number / 5) - 1];
+
     return (
-        <StyledCard mini={mini}>
-            <div>{number || "-"}</div>
+        <StyledCard mini={mini} color={color}>
+            <div>{number >= 0 ? number : "-"}</div>
         </StyledCard>
     );
 }

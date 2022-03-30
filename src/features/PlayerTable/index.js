@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { LIGHT_RAINBOW } from "../../constant/colors";
 import ScoreTable from "./ScoreTable";
 
 const TableWrapper = styled.div`
@@ -22,8 +23,8 @@ function PlayerTable() {
     const { turns, players } = useSelector(({ game }) => game);
     return (
         <TableWrapper numTables={players.length}>
-            {turns.map((id) => (
-                <ScoreTable key={players[id].name} player={players[id]} />
+            {turns.map((id, idx) => (
+                <ScoreTable key={players[id].name} player={players[id]} color={LIGHT_RAINBOW[idx]}/>
             ))}
         </TableWrapper>
     );

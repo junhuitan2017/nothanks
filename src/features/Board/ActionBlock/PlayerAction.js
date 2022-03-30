@@ -1,10 +1,15 @@
 import styled from "styled-components";
+import { UNICORN_RAINBOW } from "../../../constant/colors";
+import { GameButton } from "../../../constant/GameButton";
 
 const ActionWrapper = styled.div`
-    display: grid;
-    grid-template-columns: 20% 15% 15% 20%;
-    grid-column-gap: 10%;
+    display: flex;
+    justify-content: space-evenly;
     padding-bottom: 30px;
+    button {
+        width: 90%;
+        margin: 0 8px;
+    }
 `;
 
 function PlayerAction(props) {
@@ -12,10 +17,8 @@ function PlayerAction(props) {
 
     return (
         <ActionWrapper>
-            <div></div>
-            <button onClick={onTakeCard}>Take</button>
-            <button onClick={onPassTurn}>Pass (-1 Token)</button>
-            <div></div>
+            <GameButton onClick={onTakeCard} color={UNICORN_RAINBOW[3]}>Take</GameButton>
+            <GameButton onClick={onPassTurn} color={UNICORN_RAINBOW[0]}>Pass (-1 Token)</GameButton>
         </ActionWrapper>
     );
 }

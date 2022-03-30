@@ -2,20 +2,26 @@ import styled from "styled-components";
 import Card from "../Board/Card";
 
 const ScoreWrapper = styled.div`
+    min-width: 180px;
+    border: 3px solid black;
+    border-radius: 8px;
+    background-color: ${({ color }) => color};
     display: flex;
-    flex-flow: column wrap;
-    align-items: center;
+    flex-flow: column;
 `;
 
-const StyledTable = styled.table`
-    width: 8em;
-    td {
-        width: 50%;
-        padding: 20px;
-    }
-    th {
-        padding: 10px 0px;
-    }
+const NameHeader = styled.div`
+    font-weight: bold;
+    font-size: 32px;
+`
+
+const DetailWrapper = styled.div`
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+    align-items: center;
+    margin: 0 30px 4px;
+    height: 40px;
 `;
 
 const CardWrapper = styled.div`
@@ -27,28 +33,30 @@ const CardWrapper = styled.div`
 `;
 
 function ScoreTable(props) {
-    const { player } = props;
+    const { player, color } = props;
     const { name, score, token, cards } = player;
 
     return (
-        <ScoreWrapper>
-            <StyledTable>
-                <thead>
-                    <tr>
-                        <th colSpan={2}>{name}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>P</th>
-                        <th>T</th>
-                    </tr>
-                    <tr>
-                        <td>{Math.max(score, 0)}</td>
-                        <td>{token}</td>
-                    </tr>
-                </tbody>
-            </StyledTable>
+        <ScoreWrapper color={color}>
+            <NameHeader>{name}</NameHeader>
+            <DetailWrapper>
+                <img
+                    src={"image/star.png"}
+                    alt={"Points"}
+                    width={25}
+                    height={25}
+                />
+                <h3>{Math.max(score, 0)}</h3>
+            </DetailWrapper>
+            <DetailWrapper>
+                <img
+                    src={"image/token.png"}
+                    alt={"Tokens"}
+                    width={25}
+                    height={25}
+                />
+                <h3>{token}</h3>
+            </DetailWrapper>
             <CardWrapper>
                 {cards.map((cardNo) => (
                     <Card key={cardNo} number={cardNo} mini={true} />
