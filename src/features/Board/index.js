@@ -7,13 +7,20 @@ import PlayerAction from "./ActionBlock/PlayerAction";
 import WaitAction from "./ActionBlock/WaitAction";
 import socket from "../../Socket";
 import BoardInfo from "./BoardInfo";
+import { GAME_BG_COLOR } from "../../constant/colors";
 
 const BoardWrapper = styled.div`
     padding: 4px;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     flex-flow: column wrap;
     text-align: center;
+    border: 3px solid black;
+    border-radius: 8px;
+    background-color: ${GAME_BG_COLOR};
+    background-image: url("image/gamebg.png");
+    background-position: bottom;
+    background-repeat: no-repeat;
 `;
 const ActionWrapper = styled.div`
     min-height: 100px;
@@ -27,7 +34,6 @@ const GameWrapper = styled.div`
     justify-content: space-evenly;
     align-items: center;
     text-align: center;
-    margin: 0 200px;
 `;
 
 function Board() {

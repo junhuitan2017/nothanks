@@ -12,17 +12,6 @@ const WaitWrapper = styled.div`
 function WaitAction(props) {
     const { isHost, onStartGame } = props;
 
-    // return (
-    //     <WaitWrapper>
-    //         <div></div>
-    //         {isHost ? (
-    //             <GameButton onClick={onStartGame} color={UNICORN_RAINBOW[2]}>Start Game</GameButton>
-    //         ) : (
-    //             <h1>Waiting for host to start</h1>
-    //         )}
-    //         <div></div>
-    //     </WaitWrapper>
-    // );
     return isHost ? (
         <WaitWrapper>
             <div></div>

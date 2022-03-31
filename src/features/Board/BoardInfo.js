@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { UNICORN_RAINBOW } from "../../constant/colors";
+import { GAME_BG_COLOR, UNICORN_RAINBOW } from "../../constant/colors";
 
 const InfoWrapper = styled.div`
     height: 200px;
@@ -9,6 +9,7 @@ const InfoWrapper = styled.div`
     display: flex;
     flex-flow: column;
     justify-content: space-evenly;
+    background-color: ${GAME_BG_COLOR};
 `
 
 const StyledCard = styled.div`

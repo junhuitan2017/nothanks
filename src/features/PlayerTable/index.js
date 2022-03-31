@@ -6,17 +6,10 @@ import ScoreTable from "./ScoreTable";
 
 const TableWrapper = styled.div`
     display: flex;
+    flex-flow: row wrap;
     justify-content: space-around;
     text-align: center;
     padding: 4px;
-
-    table,
-    th,
-    td {
-        border-collapse: collapse;
-        border: 2px solid black;
-        padding: 10px;
-    }
 `;
 
 function PlayerTable() {

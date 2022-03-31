@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { UNICORN_RAINBOW } from "../../constant/colors";
+import { GAME_BG_COLOR, UNICORN_RAINBOW } from "../../constant/colors";
 
 const StyledCard = styled.div`
     height: 200px;
@@ -27,7 +27,7 @@ const StyledCard = styled.div`
 function Card(props) {
     const { number, mini } = props;
 
-    const color = UNICORN_RAINBOW[Math.ceil(number / 5) - 1];
+    const color = UNICORN_RAINBOW[Math.ceil(number / 5) - 1] || GAME_BG_COLOR;
 
     return (
         <StyledCard mini={mini} color={color}>

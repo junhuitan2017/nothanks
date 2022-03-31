@@ -5,27 +5,35 @@ import Board from "./features/Board";
 import { GameButton } from "./constant/GameButton";
 import * as Actions from "./Store/Actions";
 import socket from "./Socket";
-import { UNICORN_RAINBOW } from "./constant/colors";
+import { LOGIN_BG_COLOR, UNICORN_RAINBOW } from "./constant/colors";
 
 const AppBody = styled.div`
     min-height: 90vh;
     padding: 4px;
     display: flex;
-    flex-flow: column nowrap;
     justify-content: space-around;
     text-align: center;
 `;
 
+const GameWrapper = styled.div`
+    display: grid;
+    width:  100%;
+    grid-template-columns: 60% 40%;
+`
+
 const StyledForm = styled.form`
-    background-color: ${UNICORN_RAINBOW[0]};
+    background-color: ${LOGIN_BG_COLOR};
     width: 50%;
     height: 50vh;
     display: flex;
     flex-flow: column;
-    justify-content: center;
+    justify-content: end;
     align-items: center;
     align-self: center;
     border-radius: 8px;
+    background-image: url("image/loginbg.gif");
+    background-position: bottom;
+    background-repeat: no-repeat;
 `;
 
 const StyledInput = styled.input`
@@ -61,7 +69,7 @@ function App() {
         <AppBody>
             {showDialog ? (
                 <StyledForm onSubmit={submitName}>
-                    <h1>Enter your name:</h1>
+                    {/* <h1>Enter your name:</h1> */}
                     <StyledInput
                         maxLength={10}
                         placeholder={"Enter your name"}
@@ -72,10 +80,10 @@ function App() {
                     <p style={{ color: "red" }}>{error}</p>
                 </StyledForm>
             ) : (
-                <>
+                <GameWrapper>
                     <PlayerTable />
                     <Board />
-                </>
+                </GameWrapper>
             )}
         </AppBody>
     );

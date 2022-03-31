@@ -3,6 +3,7 @@ import Card from "../Board/Card";
 
 const ScoreWrapper = styled.div`
     min-width: 180px;
+    height: fit-content;
     border: 3px solid black;
     border-radius: 8px;
     background-color: ${({ color }) => color};
