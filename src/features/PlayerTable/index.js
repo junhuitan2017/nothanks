@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { LIGHT_RAINBOW } from "../../constant/colors";
+import socket from "../../Socket";
 import ScoreTable from "./ScoreTable";
 
 const TableWrapper = styled.div`
@@ -17,7 +18,7 @@ function PlayerTable() {
     return (
         <TableWrapper numTables={players.length}>
             {turns.map((id, idx) => (
-                <ScoreTable key={players[id].name} player={players[id]} color={LIGHT_RAINBOW[idx]}/>
+                <ScoreTable key={players[id].name} player={players[id]} color={LIGHT_RAINBOW[idx]} isPlayerTurn={id === socket.id}/>
             ))}
         </TableWrapper>
     );

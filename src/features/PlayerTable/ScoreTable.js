@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import { UNICORN_RAINBOW } from "../../constant/colors";
 import Card from "../Board/Card";
 
 const ScoreWrapper = styled.div`
     min-width: 180px;
     height: fit-content;
-    border: 3px solid black;
+    border: 3px solid ${({isPlayerTurn}) => isPlayerTurn ? UNICORN_RAINBOW[3] : "black"};
     border-radius: 8px;
     background-color: ${({ color }) => color};
     display: flex;
@@ -34,11 +35,11 @@ const CardWrapper = styled.div`
 `;
 
 function ScoreTable(props) {
-    const { player, color } = props;
+    const { player, color, isPlayerTurn } = props;
     const { name, score, token, cards } = player;
 
     return (
-        <ScoreWrapper color={color}>
+        <ScoreWrapper color={color} isPlayerTurn={isPlayerTurn}>
             <NameHeader>{name}</NameHeader>
             <DetailWrapper>
                 <img

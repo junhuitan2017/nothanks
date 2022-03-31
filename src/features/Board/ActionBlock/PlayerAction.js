@@ -5,7 +5,6 @@ import { GameButton } from "../../../constant/GameButton";
 const ActionWrapper = styled.div`
     display: flex;
     justify-content: space-evenly;
-    padding-bottom: 30px;
     button {
         width: 90%;
         margin: 0 8px;

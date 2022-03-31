@@ -24,10 +24,11 @@ const BoardWrapper = styled.div`
 `;
 const ActionWrapper = styled.div`
     min-height: 100px;
-    width: 50%;
+    width: 90%;
     border-radius: 8px;
     align-self: center;
     margin: 8px;
+    padding-bottom: 30px;
 `;
 const GameWrapper = styled.div`
     display: flex;
