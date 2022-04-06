@@ -66,7 +66,7 @@ function App() {
             return;
         }
         if (currentPlayerIndex !== null) {
-            setError("Game has already started")
+            setError("Game has already started");
         }
         Actions.sendName(socket.id, name);
         setShowDialog(false);
@@ -76,7 +76,15 @@ function App() {
         <AppBody>
             {showDialog ? (
                 <StyledForm onSubmit={submitName}>
-                    <span style={{fontSize: "40px", fontWeight: "bold", color: "lightcoral"}}>NO</span>
+                    <span
+                        style={{
+                            fontSize: "40px",
+                            fontWeight: "bold",
+                            color: "lightcoral",
+                        }}
+                    >
+                        NO
+                    </span>
                     <img src={"image/loginbg.gif"} alt={"NO THANKS"} />
                     <StyledInput
                         maxLength={10}
