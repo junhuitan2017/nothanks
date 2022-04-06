@@ -4,6 +4,12 @@ steps:
   args: ["install"]
 - name: node:14.10.1
   entrypoint: npm
+  args: ["run", "create-env"]
+  env:
+    - 'DISCORD_BOT_ID=${_DISCORD_BOT_ID}'
+    - 'NODE_ENV=production'
+- name: node:14.10.1
+  entrypoint: npm
   args: ["run", "build"]
 - name: "gcr.io/cloud-builders/gcloud"
   args: ["app", "deploy"]

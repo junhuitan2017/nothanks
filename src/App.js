@@ -34,9 +34,9 @@ const StyledForm = styled.form`
     align-items: center;
     align-self: center;
     border-radius: 8px;
-    background-image: url("image/loginbg.gif");
-    background-position: bottom;
-    background-repeat: no-repeat;
+    // background-image: url("image/loginbg.gif");
+    // background-position: top;
+    // background-repeat: no-repeat;
 `;
 
 const StyledInput = styled.input`
@@ -76,7 +76,8 @@ function App() {
         <AppBody>
             {showDialog ? (
                 <StyledForm onSubmit={submitName}>
-                    {/* <h1>Enter your name:</h1> */}
+                    <span style={{fontSize: "40px", fontWeight: "bold", color: "lightcoral"}}>NO</span>
+                    <img src={"image/loginbg.gif"} alt={"NO THANKS"} />
                     <StyledInput
                         maxLength={10}
                         placeholder={"Enter your name"}

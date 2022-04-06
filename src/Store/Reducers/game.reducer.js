@@ -2,6 +2,7 @@ import * as Actions from "../Actions";
 import { PASS_TURN, PLAYER_LEFT } from "../Actions";
 
 const initialState = {
+    roomId: null,
     host: null,
     deck: [],
     tokenPool: 0,
@@ -18,6 +19,7 @@ const game = (state = initialState, action) => {
         case Actions.SETUP_ID:
             return {
                 ...state,
+                roomId: action.roomId,
                 host: state.host || action.id,
             };
         case Actions.SETUP_NAME:

@@ -24,12 +24,13 @@ export default function registerGame(gameRef) {
             }
         });
 
-        socket.on("connect", () => {
-            socket.emit(GAME_EVENT, {
-                type: Actions.SETUP_ID,
-                id: socket.id,
-            });
-        });
+        // Using room_connect instead
+        // socket.on("connect", () => {
+        //     socket.emit(GAME_EVENT, {
+        //         type: Actions.SETUP_ID,
+        //         id: socket.id,
+        //     });
+        // });
 
         socket.on(SPECIAL_EVENT, (action) => {
             switch (action.type) {

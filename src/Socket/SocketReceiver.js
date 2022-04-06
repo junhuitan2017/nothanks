@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import registerGame from "./game.receiver";
+import { joinRoom } from "./socket.sender";
 
 export default function SocketReceiver() {
     const dispatch = useDispatch();
@@ -14,6 +15,10 @@ export default function SocketReceiver() {
 
     useEffect(() => {
         dispatch(registerGame(gameRef));
+        const roomId = window.location.pathname.split("/").pop();
+        console.log(`Joining ${roomId}`);
+        joinRoom(roomId);
+
     }, [dispatch]);
 
     useEffect(() => {
