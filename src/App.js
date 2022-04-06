@@ -27,16 +27,13 @@ const GameWrapper = styled.div`
 const StyledForm = styled.form`
     background-color: ${LOGIN_BG_COLOR};
     width: 50%;
-    height: 50vh;
     display: flex;
+    padding: 8px;
     flex-flow: column;
     justify-content: end;
     align-items: center;
     align-self: center;
     border-radius: 8px;
-    // background-image: url("image/loginbg.gif");
-    // background-position: top;
-    // background-repeat: no-repeat;
 `;
 
 const StyledInput = styled.input`
