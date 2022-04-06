@@ -4,7 +4,7 @@ import * as Actions from "../Store/Actions";
 export default function registerGame(gameRef) {
     return (dispatch) => {
         socket.on(GAME_EVENT, (action) => {
-            console.log(gameRef.current);
+            // console.log(gameRef.current);
             switch (action.type) {
                 case Actions.SETUP_ID:
                     console.log(gameRef.current.host, socket.id);
@@ -18,7 +18,7 @@ export default function registerGame(gameRef) {
                     dispatch(action);
                     break;
                 default:
-                    console.log(`Game Event: ${action.type}`);
+                    // console.log(`Game Event: ${action.type}`);
                     dispatch(action);
                     break;
             }

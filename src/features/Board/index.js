@@ -55,7 +55,7 @@ function Board() {
             [...Array(36).keys()].slice(3)
         );
         const shuffledTurns = Actions.shuffle(turns);
-        const startingCardIndex = Math.floor(Math.random() * deck.length);
+        const startingCardIndex = Math.floor(Math.random() * newDeck.length);
         const numPlayers = Object.keys(players).length;
         const startingToken = numPlayers <= 5 ? 11 : numPlayers <= 6 ? 9 : 7;
         Actions.startGame(
@@ -67,6 +67,7 @@ function Board() {
     }
 
     function takeCard() {
+        console.log(deck[currentCardIndex]);
         const currPlayerCards = [
             ...players[turns[currentPlayerIndex]].cards,
             deck[currentCardIndex],
@@ -81,7 +82,7 @@ function Board() {
                 deck.length - 1,
                 turns.length,
                 currentPlayerIndex
-            ), // One card will be taken
+            ),
             Math.floor(Math.random() * (deck.length - 1)), // One card will be taken
             Actions.calculateScore(currPlayerCards)
         );
@@ -92,7 +93,15 @@ function Board() {
             setCannotPass(true);
             return;
         }
-        Actions.passTurn(turns[currentPlayerIndex]);
+        Actions.passTurn(
+            turns[currentPlayerIndex],
+            Actions.getNextPlayerIndex(
+                deck.length,
+                turns.length,
+                currentPlayerIndex
+            ),
+            Actions.calculateScore(players[turns[currentPlayerIndex]].cards)
+        );
     }
 
     return (

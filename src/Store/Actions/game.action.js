@@ -23,7 +23,7 @@ export function startGame(deck, turns, cIndex, startingToken) {
         turns,
         pIndex: 0,
         cIndex,
-        startingToken
+        startingToken,
     });
 }
 
@@ -39,10 +39,12 @@ export function takeCard(id, cIndex, cards, nextPIndex, nextCIndex, score) {
     });
 }
 
-export function passTurn(id) {
+export function passTurn(id, nextPIndex, score) {
     SocketSender.broadcastToAll({
         type: PASS_TURN,
         id,
+        nextPIndex,
+        score,
     });
 }
 
@@ -69,7 +71,7 @@ export function getNextPlayerIndex(deckLength, turnsLength, pIndex) {
 }
 
 export function calculateScore(cards) {
-    if (!cards) return 0;
+    if (!cards || cards.length === 0) return 0;
 
     let result = cards[cards.length - 1];
     for (let i = cards.length - 2; i >= 0; i--) {

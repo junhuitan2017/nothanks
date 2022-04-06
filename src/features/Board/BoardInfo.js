@@ -17,7 +17,9 @@ const StyledCard = styled.div`
     width: 45px;
     border: 1px solid black;
     border-radius: 8px;
-    background-color: ${UNICORN_RAINBOW[0]}
+    background-color: ${UNICORN_RAINBOW[0]};
+    display: flex;
+    align-items: center;
 `;
 
 const DetailWrapper = styled.div`
@@ -34,7 +36,7 @@ function BoardInfo(props) {
     return (
         <InfoWrapper>
             <DetailWrapper>
-                <StyledCard />
+                <StyledCard>Cards Left</StyledCard>
                 <h2>{numCards >= 0 ? numCards : "-"}</h2>
             </DetailWrapper>
             <DetailWrapper>

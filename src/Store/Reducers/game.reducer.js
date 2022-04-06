@@ -36,13 +36,13 @@ const game = (state = initialState, action) => {
             };
         case Actions.START_GAME:
             const resetPlayers = {};
-            Object.keys(state.players).forEach(id => {
+            Object.keys(state.players).forEach((id) => {
                 resetPlayers[id] = {
                     name: state.players[id].name,
                     score: 0,
                     token: action.startingToken,
                     cards: [],
-                }
+                };
             });
             return {
                 ...state,
@@ -54,7 +54,8 @@ const game = (state = initialState, action) => {
                 currentPlayerIndex: action.pIndex,
             };
         case Actions.TAKE_CARD:
-            const playerTokens = state.players[action.id].token + state.tokenPool;
+            const playerTokens =
+                state.players[action.id].token + state.tokenPool;
             return {
                 ...state,
                 deck: [
@@ -78,15 +79,17 @@ const game = (state = initialState, action) => {
             return {
                 ...state,
                 tokenPool: state.tokenPool + 1,
-                turns: [...state.turns.slice(1), state.turns[0]],
+                // turns: [...state.turns.slice(1), state.turns[0]],
                 players: {
                     ...state.players,
                     [action.id]: {
                         ...state.players[action.id],
-                        score: state.players[action.id].score + 1,
+                        score:
+                            action.score - (state.players[action.id].token - 1),
                         token: state.players[action.id].token - 1,
                     },
                 },
+                currentPlayerIndex: action.nextPIndex,
             };
         case PLAYER_LEFT:
             const { [action.id]: removedPlayer, ...otherPlayers } =

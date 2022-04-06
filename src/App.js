@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import PlayerTable from "./features/PlayerTable";
 import Board from "./features/Board";
@@ -13,13 +14,15 @@ const AppBody = styled.div`
     display: flex;
     justify-content: space-around;
     text-align: center;
+    font-family: "Gill Sans", Helvetica, sans-serif;
 `;
 
 const GameWrapper = styled.div`
     display: grid;
-    width:  100%;
+    height: 90vh;
+    width: 100%;
     grid-template-columns: 60% 40%;
-`
+`;
 
 const StyledForm = styled.form`
     background-color: ${LOGIN_BG_COLOR};
@@ -51,6 +54,7 @@ const StyledButton = styled(GameButton)`
 `;
 
 function App() {
+    const { currentPlayerIndex } = useSelector(({ game }) => game);
     const [showDialog, setShowDialog] = useState(true);
     const [name, setName] = useState("");
     const [error, setError] = useState("");
@@ -60,6 +64,9 @@ function App() {
         if (!name) {
             setError("Name cannot be empty");
             return;
+        }
+        if (currentPlayerIndex !== null) {
+            setError("Game has already started")
         }
         Actions.sendName(socket.id, name);
         setShowDialog(false);
@@ -76,7 +83,9 @@ function App() {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
-                    <StyledButton color={UNICORN_RAINBOW[4]}>Enter Game</StyledButton>
+                    <StyledButton color={UNICORN_RAINBOW[4]}>
+                        Enter Game
+                    </StyledButton>
                     <p style={{ color: "red" }}>{error}</p>
                 </StyledForm>
             ) : (

@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { LIGHT_RAINBOW } from "../../constant/colors";
-import socket from "../../Socket";
 import ScoreTable from "./ScoreTable";
 
 const TableWrapper = styled.div`
@@ -11,14 +10,19 @@ const TableWrapper = styled.div`
     justify-content: space-around;
     text-align: center;
     padding: 4px;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 `;
 
 function PlayerTable() {
-    const { turns, players } = useSelector(({ game }) => game);
+    const { turns, players, currentPlayerIndex } = useSelector(({ game }) => game);
     return (
-        <TableWrapper numTables={players.length}>
+        <TableWrapper>
             {turns.map((id, idx) => (
-                <ScoreTable key={players[id].name} player={players[id]} color={LIGHT_RAINBOW[idx]} isPlayerTurn={id === socket.id}/>
+                <ScoreTable key={players[id].name} player={players[id]} color={LIGHT_RAINBOW[idx%7]} isPlayerTurn={idx === currentPlayerIndex}/>
             ))}
         </TableWrapper>
     );
