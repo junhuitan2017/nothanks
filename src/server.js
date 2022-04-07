@@ -87,7 +87,7 @@ io.on("connection", (socket) => {
 });
 
 app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "build", "index.html"));
+    res.sendFile(path.join(__dirname, "../build", "index.html"));
 });
 server.listen(gameport, () => {
     console.log(`App listening on port ${gameport}`);
@@ -126,7 +126,10 @@ client.on("message", (msg) => {
                 .setURL(`${gameUrl}/${roomId}`)
                 .setImage(`${gameUrl}/image/cover.png`)
                 .setTimestamp();
-            msg.channel.send({ content: `${msg.author.username} has created a room!`, embeds: [newRoomEmbed] });
+            msg.channel.send({
+                content: `${msg.author.username} has created a room!`,
+                embeds: [newRoomEmbed],
+            });
             break;
         default:
             break;
