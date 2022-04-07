@@ -150,15 +150,15 @@ client.on("interactionCreate", (interaction) => {
                         prev +
                         validChar[Math.floor(Math.random() * validChar.length)],
                     ""
-                ) + interaction.author.discriminator;
+                ) + interaction.user.discriminator;
             const newRoomEmbed = new MessageEmbed()
                 .setTitle("No Thanks! Card Game")
                 .setDescription("Use this link to join the room!")
                 .setURL(`${gameUrl}/${roomId}`)
                 .setImage(`${gameUrl}/image/cover.png`)
                 .setTimestamp();
-            interaction.channel.send({
-                content: `${interaction.author.username} has created a room!`,
+            interaction.reply({
+                content: `${interaction.user.username} has created a room!`,
                 embeds: [newRoomEmbed],
             });
             break;
