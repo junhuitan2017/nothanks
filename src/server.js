@@ -142,7 +142,7 @@ client.on("interactionCreate", (interaction) => {
         case "ping":
             interaction.reply("Hi, I am alive. Thanks for asking. :)");
             break;
-        case "!newroom":
+        case "newroom":
             const validChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             const roomId =
                 [...Array(5).keys()].reduce(
